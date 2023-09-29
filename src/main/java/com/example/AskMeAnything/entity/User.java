@@ -1,17 +1,15 @@
 package com.example.AskMeAnything.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 
-import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.lang.NonNull;
 
 @Entity
 @Data
 @AllArgsConstructor
+@Table(name = "\"User\"")
 public class User {
 
     @Id
