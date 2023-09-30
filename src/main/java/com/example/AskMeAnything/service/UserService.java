@@ -21,7 +21,7 @@ public class UserService {
     public ResponseEntity<User> findById(Long id) {
         User user = getUserRepository()
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException("user with id " + id + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         return new ResponseEntity<>(user,
                 HttpStatus.OK);
     }
@@ -30,8 +30,8 @@ public class UserService {
 
         User user = new User(
                 newUser.getName(),
-                newUser.getEmail(),
-                newUser.getPassword()
+                newUser.getPassword(),
+                newUser.getEmail()
         );
         userRepository.save(user);
 
