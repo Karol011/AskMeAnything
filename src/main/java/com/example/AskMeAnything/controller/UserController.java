@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @Getter
 @Setter
+@Validated
 public class UserController {
 
     private UserService userService;

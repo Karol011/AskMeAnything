@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
 
 @Entity
 @Data
@@ -19,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotBlank(message = "This field must not be empty.")
-    @Size(min = 2)
+    @Size(min = 2, max = 50)
     private String name;
     private String password;
     @NotNull
