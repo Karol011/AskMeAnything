@@ -1,17 +1,21 @@
 spring:
-  h2:
-    console.enabled: true
+  security:
+    user:
+      name: user
+      password: user
+
   datasource:
-    url: jdbc:h2:mem:testdb
-#    jdbc:mysql://localhost:3306/askanything?serverTimezone=UTC&useLegacyDatetimeCode=false
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/askmeanything?serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: root
+    password: admin
   jpa:
     generate-ddl: true
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
 #  security:
 #    user:
 #      name: user
