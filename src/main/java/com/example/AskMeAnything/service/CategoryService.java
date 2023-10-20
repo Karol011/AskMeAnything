@@ -2,11 +2,8 @@ package com.example.AskMeAnything.service;
 
 
 import com.example.AskMeAnything.entity.Category;
-import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
-import com.example.AskMeAnything.exception.UserNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
-import com.example.AskMeAnything.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
