@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,6 +26,8 @@ public class User {
     @NotNull
     @Email(message = "Invalid email format. Please provide a valid email address.")
     private String email;
+    @OneToMany
+    private List<Question> questions;
 
     public User(String name, String password, String email) {
         this.name = name;
