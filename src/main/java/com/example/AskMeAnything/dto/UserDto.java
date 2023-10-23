@@ -18,7 +18,7 @@ public class UserDto {
     @Size(min = 2, max = 50)
     private String name;
     private String password;
-    @NotNull
+    @NotNull(message = "This field must not be empty.")
     @Email(message = "Invalid email format. Please provide a valid email address.")
     private String email;
 

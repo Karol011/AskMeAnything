@@ -1,11 +1,11 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.dto.UserDto;
-import com.example.AskMeAnything.dto.UserMapper;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
