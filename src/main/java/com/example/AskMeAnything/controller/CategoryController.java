@@ -1,12 +1,9 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.entity.Category;
-import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.service.CategoryService;
-import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Getter
-@Setter
 @Validated
 public class CategoryController {
 

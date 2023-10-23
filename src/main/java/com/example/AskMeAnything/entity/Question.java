@@ -30,5 +30,10 @@ public class Question {
     private String text;
     private LocalDateTime dateTime;
 
-
+    public Question(Category category, User userId, String text) {
+        this.category = category;
+        this.userId = userId;
+        this.text = text;
+        this.dateTime = LocalDateTime.now();
+    }
 }
