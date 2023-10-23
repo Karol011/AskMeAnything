@@ -1,5 +1,7 @@
 package com.example.AskMeAnything.controller;
 
+import com.example.AskMeAnything.dto.UserDto;
+import com.example.AskMeAnything.dto.UserMapper;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
@@ -29,15 +31,14 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return userService.findAll();
     }
 
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-
-        return userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @DeleteMapping("{id}")

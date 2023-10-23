@@ -1,5 +1,7 @@
 package com.example.AskMeAnything.service;
 
+import com.example.AskMeAnything.dto.UserDto;
+import com.example.AskMeAnything.dto.UserMapper;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.UserNotFoundException;
 import com.example.AskMeAnything.repository.UserRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -30,20 +33,26 @@ public class UserService {
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<List<User>> findAll() {
-        return new ResponseEntity<>(getUserRepository().findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> findAll() {
+
+        List<UserDto> users = getUserRepository().findAll()
+                .stream()
+                .map(UserMapper::toDto)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    public ResponseEntity<User> createUser(User newUser) {
+    public ResponseEntity<UserDto> createUser(UserDto newUserDto) {
 
         User user = new User(
-                newUser.getName(),
-                newUser.getPassword(),
-                newUser.getEmail()
+                newUserDto.getName(),
+                newUserDto.getPassword(),
+                newUserDto.getEmail()
         );
         userRepository.save(user);
 
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUserDto, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> deleteUser(Long id) {
