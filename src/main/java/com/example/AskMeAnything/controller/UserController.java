@@ -1,7 +1,6 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.dto.UserDto;
-import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -26,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> findUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 

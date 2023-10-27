@@ -12,14 +12,8 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database-platform: org.hibernate.dialect.MySQLDialect
-
-
-#  security:
-#    user:
-#      name: user
-#      password: user
   sql:
     init:
       enabled: true

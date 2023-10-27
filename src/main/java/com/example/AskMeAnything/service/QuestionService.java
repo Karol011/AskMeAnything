@@ -7,6 +7,7 @@ import com.example.AskMeAnything.entity.Question;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.exception.QuestionNotFoundException;
+import com.example.AskMeAnything.exception.UserNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import com.example.AskMeAnything.repository.QuestionRepository;
 import com.example.AskMeAnything.repository.UserRepository;
@@ -22,15 +23,16 @@ import java.util.Optional;
 @Getter
 public class QuestionService {
 
-
     private final QuestionRepository questionRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final QuestionMapper questionMapper;
 
-    public QuestionService(QuestionRepository questionRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
+    public QuestionService(QuestionRepository questionRepository, CategoryRepository categoryRepository, UserRepository userRepository, QuestionMapper questionMapper) {
         this.questionRepository = questionRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
+        this.questionMapper = questionMapper;
     }
 
     public ResponseEntity<Question> findById(Long id) {
@@ -47,10 +49,14 @@ public class QuestionService {
 
     public ResponseEntity<Question> createQuestion(QuestionDto questionDto) {
 
-        Category category = categoryRepository.findById(questionDto.getCategory().getId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
-        User user = userRepository.findById(questionDto.getUser().getId()).orElseThrow(() -> new QuestionNotFoundException("Question not found"));
+        Category category = categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        User user = userRepository.findById(questionDto.getUserId()).orElseThrow(() -> new UserNotFoundException("Question not found"));
 
-        Question question = QuestionMapper.mapQuestionDTOToEntity(questionDto);
+        //Question question = QuestionMapper.mapQuestionDTOToEntity(questionDto);
+        Question question = new Question();
+        question.setUserId(user);
+        question.setCategory(category);
+        question.setText(questionDto.getText());
         questionRepository.save(question);
 
         return new ResponseEntity<>(question, HttpStatus.CREATED);

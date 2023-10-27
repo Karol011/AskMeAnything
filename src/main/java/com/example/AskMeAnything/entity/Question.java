@@ -5,14 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Question {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +29,15 @@ public class Question {
     private String text;
     private LocalDateTime dateTime;
 
+    public Question() {
+        this.dateTime = LocalDateTime.now();
+    }
+
     public Question(Category category, User userId, String text) {
         this.category = category;
         this.userId = userId;
         this.text = text;
         this.dateTime = LocalDateTime.now();
     }
+
 }

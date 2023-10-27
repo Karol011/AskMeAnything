@@ -25,11 +25,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<User> findById(Long id) {
+    public ResponseEntity<UserDto> findById(Long id) {
         User user = getUserRepository()
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
-        return new ResponseEntity<>(user,
+
+        UserDto userDto = UserMapper.toDto(user);
+        return new ResponseEntity<>(userDto,
                 HttpStatus.OK);
     }
 
