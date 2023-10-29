@@ -1,6 +1,6 @@
 package com.example.AskMeAnything.controller;
 
-import com.example.AskMeAnything.entity.Category;
+import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -23,20 +23,20 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> findCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable Long id) {
         return getCategoryService().findById(id);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return getCategoryService().findAll();
     }
 
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
 
-        return getCategoryService().createCategory(category);
+        return getCategoryService().createCategory(categoryDto);
     }
 
     @DeleteMapping("{id}")

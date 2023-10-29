@@ -21,7 +21,7 @@ public class QuestionMapper {
 
     public Question toEntity(QuestionDto questionDto) {
         Question question = new Question();
-        //question.setCategory(categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category with id not found")));
+        question.setCategory(categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category with id not found")));
         question.setUser(userRepository.findById(question.getId()).orElseThrow(()-> new UserNotFoundException("User with id not found")));
         question.setText(questionDto.getText());
         return question;
