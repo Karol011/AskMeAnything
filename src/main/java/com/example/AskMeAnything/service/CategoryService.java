@@ -3,9 +3,7 @@ package com.example.AskMeAnything.service;
 
 import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.dto.CategoryMapper;
-import com.example.AskMeAnything.dto.QuestionDto;
 import com.example.AskMeAnything.entity.Category;
-import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;

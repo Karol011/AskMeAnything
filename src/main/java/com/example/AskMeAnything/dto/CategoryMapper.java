@@ -1,7 +1,6 @@
 package com.example.AskMeAnything.dto;
 
 import com.example.AskMeAnything.entity.Category;
-import com.example.AskMeAnything.service.CategoryService;
 import org.springframework.stereotype.Component;
 
 @Component
