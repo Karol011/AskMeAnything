@@ -30,7 +30,7 @@ public class QuestionMapper {
     public QuestionDto toDto(Question question) {
         QuestionDto questionDto = new QuestionDto();
         questionDto.setUserId(question.getId());
-       // questionDto.setCategoryId(question.getCategory().getId());
+        questionDto.setCategoryId(question.getCategory().getId());
         questionDto.setText(question.getText());
 
         return questionDto;

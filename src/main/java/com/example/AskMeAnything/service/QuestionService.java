@@ -47,7 +47,7 @@ public class QuestionService {
 
         List<QuestionDto> list = getQuestionRepository().findAll()
                 .stream()
-                .map(question ->getQuestionMapper().toDto(question))
+                .map(questionMapper::toDto)
                 .toList();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserDto {
 
+    private Long id;
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 50, message = "Size must be between 2 and 50 characters")
     private String name;

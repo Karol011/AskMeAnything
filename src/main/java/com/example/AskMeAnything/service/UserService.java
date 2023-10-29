@@ -20,9 +20,12 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     public ResponseEntity<UserDto> findById(Long id) {
@@ -30,7 +33,7 @@ public class UserService {
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
 
-        UserDto userDto = UserMapper.toDto(user);
+        UserDto userDto = userMapper.toDto(user);
         return new ResponseEntity<>(userDto,
                 HttpStatus.OK);
     }
@@ -39,7 +42,7 @@ public class UserService {
 
         List<UserDto> users = getUserRepository().findAll()
                 .stream()
-                .map(UserMapper::toDto)
+                .map(userMapper::toDto)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -51,10 +54,11 @@ public class UserService {
                 newUserDto.getName(),
                 newUserDto.getPassword(),
                 newUserDto.getEmail()
+
         );
         userRepository.save(user);
 
-        return new ResponseEntity<>(newUserDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> deleteUser(Long id) {
@@ -63,7 +67,7 @@ public class UserService {
         if (searchedUser.isPresent()) {
             User deletedUser = searchedUser.get();
             getUserRepository().deleteById(id);
-            return ResponseEntity.ok(deletedUser);
+            return ResponseEntity.ok(userMapper.toDto(deletedUser));
         }
         String notFoundMessage = String.format("User with id %d not found", id);
         return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);
