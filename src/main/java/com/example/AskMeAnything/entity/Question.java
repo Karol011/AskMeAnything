@@ -1,5 +1,6 @@
 package com.example.AskMeAnything.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,17 +17,22 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 500)
     private String text;
+
     private LocalDateTime dateTime;
 
     public Question() {
@@ -35,7 +41,7 @@ public class Question {
 
     public Question(Category category, User userId, String text) {
         this.category = category;
-        this.userId = userId;
+        this.user = userId;
         this.text = text;
         this.dateTime = LocalDateTime.now();
     }

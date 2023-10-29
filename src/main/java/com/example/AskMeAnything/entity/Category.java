@@ -16,10 +16,12 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 50)
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
+
     @OneToMany
     private List<Question> questions;
 

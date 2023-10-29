@@ -35,31 +35,40 @@ public class QuestionService {
         this.questionMapper = questionMapper;
     }
 
-    public ResponseEntity<Question> findById(Long id) {
+    public ResponseEntity<QuestionDto> findById(Long id) {
         Question question = getQuestionRepository()
                 .findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found"));
-        return new ResponseEntity<>(question,
+        return new ResponseEntity<>(questionMapper.toDto(question),
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Question>> findAll() {
-        return new ResponseEntity<>(getQuestionRepository().findAll(), HttpStatus.OK);
+    public ResponseEntity<List<QuestionDto>> findAll() {
+
+        List<QuestionDto> list = getQuestionRepository().findAll()
+                .stream()
+                .map(question ->getQuestionMapper().toDto(question))
+                .toList();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    public ResponseEntity<Question> createQuestion(QuestionDto questionDto) {
+    public ResponseEntity<QuestionDto> createQuestion(QuestionDto questionDto) {
 
         Category category = categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         User user = userRepository.findById(questionDto.getUserId()).orElseThrow(() -> new UserNotFoundException("Question not found"));
 
-        //Question question = QuestionMapper.mapQuestionDTOToEntity(questionDto);
         Question question = new Question();
-        question.setUserId(user);
+        question.setUser(user);
         question.setCategory(category);
         question.setText(questionDto.getText());
         questionRepository.save(question);
 
-        return new ResponseEntity<>(question, HttpStatus.CREATED);
+        category.getQuestions().add(question);
+        categoryRepository.save(category);
+
+
+
+        return new ResponseEntity<>(questionDto, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Object> deleteQuestion(Long id) {
@@ -68,7 +77,7 @@ public class QuestionService {
         if (searchedQuestion.isPresent()) {
             Question deletedQuestion = searchedQuestion.get();
             getQuestionRepository().deleteById(id);
-            return ResponseEntity.ok(deletedQuestion);
+            return ResponseEntity.ok(questionMapper.toDto(deletedQuestion));
         }
         String notFoundMessage = String.format("Question with id %d not found", id);
         return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);

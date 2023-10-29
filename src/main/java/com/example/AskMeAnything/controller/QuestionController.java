@@ -24,18 +24,17 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Question> findCategoryById(@PathVariable Long id) {
+    public ResponseEntity<QuestionDto> findCategoryById(@PathVariable Long id) {
         return getQuestionService().findById(id);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Question>> getAllQuestion() {
+    public ResponseEntity<List<QuestionDto>> getAllQuestion() {
         return getQuestionService().findAll();
     }
 
-
     @PostMapping
-    public ResponseEntity<Question> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
+    public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
 
         return getQuestionService().createQuestion(questionDto);
     }
