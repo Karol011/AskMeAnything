@@ -15,6 +15,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,9 +67,20 @@ public class QuestionService {
         category.getQuestions().add(question);
         categoryRepository.save(category);
 
-
-
         return new ResponseEntity<>(questionDto, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<QuestionDto> updateQuestionCategory(Long questionId, Long categoryId) {
+        Question question = getQuestionRepository().findById(questionId).orElseThrow(() -> new QuestionNotFoundException("Question with id " + questionId + " not found"));
+        Category category = getCategoryRepository().findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Category with id " + categoryId + " not found"));
+
+        if (question != null && category != null) {
+            question.setCategory(category);
+            getQuestionRepository().save(question);
+            return new ResponseEntity<>(getQuestionMapper().toDto(question), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<Object> deleteQuestion(Long id) {

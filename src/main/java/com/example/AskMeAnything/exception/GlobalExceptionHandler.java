@@ -14,6 +14,15 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException exception) {
+        return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+    @ExceptionHandler(QuestionNotFoundException.class)
+    public ResponseEntity<Object> handleQuestionNotFoundException(QuestionNotFoundException exception) {
+        return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
         // Create a list to store validation error messages.
