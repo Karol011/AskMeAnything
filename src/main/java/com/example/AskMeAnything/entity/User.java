@@ -1,5 +1,6 @@
 package com.example.AskMeAnything.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class User {
     private String name;
     private String password;
     private String email;
+
     @OneToMany
+    @JsonManagedReference
     private List<Question> questions;
 
     public User(String name, String password, String email) {

@@ -1,5 +1,7 @@
 package com.example.AskMeAnything.dto;
 
+import com.example.AskMeAnything.entity.Question;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,5 +25,8 @@ public class UserDto {
     @NotNull(message = "This field must not be empty.")
     @Email(message = "Invalid email format. Please provide a valid email address.")
     private String email;
+
+
+    private List<Question> questions;
 
 }

@@ -62,6 +62,9 @@ public class QuestionService {
         question.setUser(user);
         question.setCategory(category);
         question.setText(questionDto.getText());
+
+        user.getQuestions().add(question);
+
         questionRepository.save(question);
 
         category.getQuestions().add(question);
