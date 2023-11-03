@@ -58,6 +58,14 @@ public class QuestionService {
         return list;
     }
 
+    public List<QuestionDto> getQuestionsByCategory(Long id) {
+       return getCategoryService().findDById(id)
+               .getQuestions()
+               .stream()
+               .map(questionMapper::toDto)
+               .toList();
+    }
+
     public QuestionDto createQuestion(QuestionDto questionDto) {
 
         Question question = new Question();
@@ -105,4 +113,6 @@ public class QuestionService {
         String notFoundMessage = String.format("Question with id %d not found", id);
         return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);
     }
+
+
 }
