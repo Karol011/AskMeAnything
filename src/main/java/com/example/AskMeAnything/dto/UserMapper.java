@@ -1,13 +1,7 @@
 package com.example.AskMeAnything.dto;
 
-import com.example.AskMeAnything.entity.Question;
 import com.example.AskMeAnything.entity.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class UserMapper {

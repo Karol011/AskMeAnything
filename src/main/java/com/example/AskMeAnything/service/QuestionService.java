@@ -15,7 +15,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,22 +54,22 @@ public class QuestionService {
 
     public ResponseEntity<QuestionDto> createQuestion(QuestionDto questionDto) {
 
-        Category category = categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
-        User user = userRepository.findById(questionDto.getUserId()).orElseThrow(() -> new UserNotFoundException("Question not found"));
-
         Question question = new Question();
-        question.setUser(user);
+
+        Category category = categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        User user = userRepository.findById(questionDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
+
         question.setCategory(category);
+        question.setUser(user);
         question.setText(questionDto.getText());
 
         user.getQuestions().add(question);
-
         questionRepository.save(question);
 
         category.getQuestions().add(question);
         categoryRepository.save(category);
 
-        return new ResponseEntity<>(questionDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(questionMapper.toDto(question), HttpStatus.CREATED);
     }
 
     public ResponseEntity<QuestionDto> updateQuestionCategory(Long questionId, Long categoryId) {

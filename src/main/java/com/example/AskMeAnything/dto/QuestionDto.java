@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 
 @Data
 public class QuestionDto {
@@ -19,5 +21,6 @@ public class QuestionDto {
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 500, message = "Size must be between 2 and 500 characters")
     private String text;
+    private LocalDateTime localDateTime;
 }
 
