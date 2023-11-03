@@ -1,11 +1,6 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.dto.QuestionDto;
-import com.example.AskMeAnything.entity.Category;
-import com.example.AskMeAnything.entity.Question;
-import com.example.AskMeAnything.exception.CategoryNotFoundException;
-import com.example.AskMeAnything.exception.QuestionNotFoundException;
-import com.example.AskMeAnything.service.CategoryService;
 import com.example.AskMeAnything.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -29,29 +24,30 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionDto> findCategoryById(@PathVariable Long id) {
-        return getQuestionService().findById(id);
+    public ResponseEntity<QuestionDto> findQuestionById(@PathVariable Long id) {
+        return new ResponseEntity<>(getQuestionService().findDtoById(id),HttpStatus.OK);
     }
 
     @GetMapping()
     public ResponseEntity<List<QuestionDto>> getAllQuestion() {
-        return getQuestionService().findAll();
+        return new ResponseEntity<>(getQuestionService().findAll(),HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
 
-        return getQuestionService().createQuestion(questionDto);
+
+        return new ResponseEntity<>(getQuestionService().createQuestion(questionDto),HttpStatus.CREATED);
     }
 
     @PatchMapping("{questionId}/category/{categoryId}")
     public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
-        return questionService.updateQuestionCategory(questionId, categoryId);
+        return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId),HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteQuestion(@PathVariable Long id) {
-        return getQuestionService().deleteQuestion(id);
+        return new ResponseEntity<>(getQuestionService().deleteQuestion(id),HttpStatus.OK);
     }
 
 

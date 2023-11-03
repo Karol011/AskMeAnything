@@ -1,16 +1,13 @@
 package com.example.AskMeAnything.service;
 
+import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.dto.QuestionDto;
 import com.example.AskMeAnything.dto.QuestionMapper;
-import com.example.AskMeAnything.entity.Category;
+import com.example.AskMeAnything.dto.UserDto;
 import com.example.AskMeAnything.entity.Question;
-import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.exception.QuestionNotFoundException;
-import com.example.AskMeAnything.exception.UserNotFoundException;
-import com.example.AskMeAnything.repository.CategoryRepository;
 import com.example.AskMeAnything.repository.QuestionRepository;
-import com.example.AskMeAnything.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,69 +20,81 @@ import java.util.Optional;
 @Getter
 public class QuestionService {
 
-    private final QuestionRepository questionRepository;
-    private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+    private final CategoryService categoryService;
+    private final UserService userService;
     private final QuestionMapper questionMapper;
+    private final QuestionRepository questionRepository;
 
-    public QuestionService(QuestionRepository questionRepository, CategoryRepository categoryRepository, UserRepository userRepository, QuestionMapper questionMapper) {
-        this.questionRepository = questionRepository;
-        this.categoryRepository = categoryRepository;
-        this.userRepository = userRepository;
+    public QuestionService(CategoryService categoryService, UserService userService, QuestionMapper questionMapper, QuestionRepository questionRepository) {
+        this.categoryService = categoryService;
+        this.userService = userService;
         this.questionMapper = questionMapper;
+        this.questionRepository = questionRepository;
     }
 
-    public ResponseEntity<QuestionDto> findById(Long id) {
+
+    public QuestionDto findDtoById(Long id) {
         Question question = getQuestionRepository()
                 .findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found"));
-        return new ResponseEntity<>(questionMapper.toDto(question),
-                HttpStatus.OK);
+        return questionMapper.toDto(question);
     }
 
-    public ResponseEntity<List<QuestionDto>> findAll() {
+    public Question findById(Long id) {
+        Question question = getQuestionRepository()
+                .findById(id)
+                .orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found"));
+        return question;
+    }
+
+
+
+    public List<QuestionDto> findAll() {
 
         List<QuestionDto> list = getQuestionRepository().findAll()
                 .stream()
                 .map(questionMapper::toDto)
                 .toList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return list;
     }
 
-    public ResponseEntity<QuestionDto> createQuestion(QuestionDto questionDto) {
+    public QuestionDto createQuestion(QuestionDto questionDto) {
 
         Question question = new Question();
 
-        Category category = categoryRepository.findById(questionDto.getCategoryId()).orElseThrow(() -> new CategoryNotFoundException("Category not found"));
-        User user = userRepository.findById(questionDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        CategoryDto categoryDto = getCategoryService().findDtoById(questionDto.getCategoryId());
+        UserDto userDto = getUserService().findDtoById(questionDto.getUserId());
 
-        question.setCategory(category);
-        question.setUser(user);
+        question.setCategory(getCategoryService().getCategoryMapper().toEntity(categoryDto));
+        question.setUser(getUserService().getUserMapper().toEntity(userDto));
         question.setText(questionDto.getText());
 
-        user.getQuestions().add(question);
-        questionRepository.save(question);
+        userDto.getQuestions().add(question);
+        getQuestionRepository().save(question);
 
-        category.getQuestions().add(question);
-        categoryRepository.save(category);
+        categoryDto.getQuestions().add(question);
+        getCategoryService().getCategoryRepository().save(getCategoryService().getCategoryMapper().toEntity(categoryDto));
 
-        return new ResponseEntity<>(questionMapper.toDto(question), HttpStatus.CREATED);
+        return getQuestionMapper().toDto(question);
     }
 
-    public ResponseEntity<QuestionDto> updateQuestionCategory(Long questionId, Long categoryId) {
-        Question question = getQuestionRepository().findById(questionId).orElseThrow(() -> new QuestionNotFoundException("Question with id " + questionId + " not found"));
-        Category category = getCategoryRepository().findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Category with id " + categoryId + " not found"));
+    public QuestionDto updateQuestionCategory(Long questionId, Long categoryId) {
+        Question question = this.findById(questionId);
+        CategoryDto categoryDto = getCategoryService().findDtoById(categoryId);
 
-        if (question != null && category != null) {
-            question.setCategory(category);
+        if (question != null && categoryDto != null) {
+            question.setCategory(getCategoryService().getCategoryMapper().toEntity(categoryDto));
             getQuestionRepository().save(question);
-            return new ResponseEntity<>(getQuestionMapper().toDto(question), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return getQuestionMapper().toDto(question);
+        } else if (question == null) {
+            throw new QuestionNotFoundException("Question not found");
+        } else if (categoryDto == null) {
+            throw new CategoryNotFoundException("Category not found");
         }
+        return new QuestionDto();
     }
 
-    public ResponseEntity<Object> deleteQuestion(Long id) {
+    public Object deleteQuestion(Long id) {
         Optional<Question> searchedQuestion = getQuestionRepository().findById(id);
 
         if (searchedQuestion.isPresent()) {

@@ -28,27 +28,31 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public ResponseEntity<UserDto> findById(Long id) {
+    public UserDto findDtoById(Long id) {
         User user = getUserRepository()
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
-
-        UserDto userDto = userMapper.toDto(user);
-        return new ResponseEntity<>(userDto,
-                HttpStatus.OK);
+        return userMapper.toDto(user);
     }
 
-    public ResponseEntity<List<UserDto>> findAll() {
+    public User findById(Long id) {
+        User user = getUserRepository()
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+        return user;
+    }
+
+    public List<UserDto> findAll() {
 
         List<UserDto> users = getUserRepository().findAll()
                 .stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return users;
     }
 
-    public ResponseEntity<UserDto> createUser(UserDto newUserDto) {
+    public UserDto createUser(UserDto newUserDto) {
 
         User user = new User(
                 newUserDto.getName(),
@@ -58,7 +62,7 @@ public class UserService {
         );
         userRepository.save(user);
 
-        return new ResponseEntity<>(userMapper.toDto(user), HttpStatus.CREATED);
+        return userMapper.toDto(user);
     }
 
     public ResponseEntity<Object> deleteUser(Long id) {

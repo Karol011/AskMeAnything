@@ -5,6 +5,7 @@ import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +27,19 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findUserById(@PathVariable Long id) {
-        return userService.findById(id);
+        return new ResponseEntity<>(userService.findDtoById(id), HttpStatus.OK);
     }
 
     @GetMapping()
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        return userService.findAll();
+
+        return new ResponseEntity<>(userService.findAll(),HttpStatus.OK);
     }
 
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        return userService.createUser(userDto);
+        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")

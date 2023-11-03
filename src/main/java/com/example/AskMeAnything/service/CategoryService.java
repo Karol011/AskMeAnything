@@ -7,8 +7,6 @@ import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,41 +24,48 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    public ResponseEntity<CategoryDto> findById(Long id) {
+    public CategoryDto findDtoById(Long id) {
         Category category = getCategoryRepository()
                 .findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found"));
-
-        return new ResponseEntity<>(categoryMapper.toDto(category),
-                HttpStatus.OK);
+        return categoryMapper.toDto(category);
     }
 
-    public ResponseEntity<List<CategoryDto>> findAll() {
+    public Category findDById(Long id) {
+        Category category = getCategoryRepository()
+                .findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found"));
+        return category;
+    }
+
+
+
+    public List<CategoryDto> findAll() {
         List<CategoryDto> list = getCategoryRepository().findAll()
                 .stream()
                 .map(categoryMapper::toDto)
                 .toList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return list;
     }
 
-    public ResponseEntity<CategoryDto> createCategory(CategoryDto categoryDto) {
+    public CategoryDto createCategory(CategoryDto categoryDto) {
 
         Category category = categoryMapper.toEntity(categoryDto);
         categoryRepository.save(category);
 
-        return new ResponseEntity<>(categoryMapper.toDto(category), HttpStatus.CREATED);
+        return categoryMapper.toDto(category);
     }
 
-    public ResponseEntity<Object> deleteCategory(Long id) {
+    public void deleteCategory(Long id) {
         Optional<Category> searchedCategory = getCategoryRepository().findById(id);
 
         if (searchedCategory.isPresent()) {
-            Category deletedCategory = searchedCategory.get();
             getCategoryRepository().deleteById(id);
-            return ResponseEntity.ok(categoryMapper.toDto(deletedCategory));
+        } else {
+            String notFoundMessage = String.format("Category with id %d not found", id);
+            throw new CategoryNotFoundException(notFoundMessage);
         }
-        String notFoundMessage = String.format("Category with id %d not found", id);
-        return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);
+
     }
 }
 
