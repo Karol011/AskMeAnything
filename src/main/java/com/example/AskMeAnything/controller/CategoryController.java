@@ -32,18 +32,23 @@ public class CategoryController {
     @GetMapping()
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
 
-        return new ResponseEntity<>(getCategoryService().findAll(),HttpStatus.OK);
+        return new ResponseEntity<>(getCategoryService().findAll(), HttpStatus.OK);
     }
 
 
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
 
-        return new ResponseEntity<>(getCategoryService().createCategory(categoryDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(getCategoryService().createCategory(categoryDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable Long id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
+        return new ResponseEntity<>(getCategoryService().deleteCategory(id));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteAll() {
+        return new ResponseEntity<>(getCategoryService().deleteAll());
     }
 }

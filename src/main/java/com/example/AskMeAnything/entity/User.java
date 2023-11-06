@@ -20,7 +20,7 @@ public class User {
     private String password;
     private String email;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Question> questions;
 

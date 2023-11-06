@@ -7,6 +7,8 @@ import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +41,6 @@ public class CategoryService {
     }
 
 
-
     public List<CategoryDto> findAll() {
         List<CategoryDto> list = getCategoryRepository().findAll()
                 .stream()
@@ -56,16 +57,31 @@ public class CategoryService {
         return categoryMapper.toDto(category);
     }
 
-    public void deleteCategory(Long id) {
+    public HttpStatus deleteCategory(Long id) {
         Optional<Category> searchedCategory = getCategoryRepository().findById(id);
+        HttpStatus httpStatus;
 
         if (searchedCategory.isPresent()) {
             getCategoryRepository().deleteById(id);
+            httpStatus = HttpStatus.OK;
         } else {
             String notFoundMessage = String.format("Category with id %d not found", id);
+            httpStatus = HttpStatus.NOT_FOUND;
             throw new CategoryNotFoundException(notFoundMessage);
         }
-
+        return httpStatus;
     }
+
+    public HttpStatus deleteAll() {
+        HttpStatus httpStatus;
+        if (getCategoryRepository() != null) {
+            getCategoryRepository().deleteAll();
+            httpStatus = HttpStatus.OK;
+        } else {
+            httpStatus = HttpStatus.NOT_FOUND;
+        }
+        return httpStatus;
+    }
+
 }
 
