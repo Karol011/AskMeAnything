@@ -1,10 +1,6 @@
 package com.example.AskMeAnything.dto;
 
 import com.example.AskMeAnything.entity.Question;
-import com.example.AskMeAnything.exception.CategoryNotFoundException;
-import com.example.AskMeAnything.exception.UserNotFoundException;
-import com.example.AskMeAnything.repository.CategoryRepository;
-import com.example.AskMeAnything.repository.UserRepository;
 import com.example.AskMeAnything.service.CategoryService;
 import com.example.AskMeAnything.service.UserService;
 import org.springframework.stereotype.Component;
@@ -23,6 +19,7 @@ public class QuestionMapper {
     public Question toEntity(QuestionDto questionDto) {
         Question question = new Question();
 
+        question.setId(questionDto.getId());
         question.setCategory(categoryService.findDById(questionDto.getCategoryId()));
         question.setUser(userService.findById(questionDto.getUserId()));
         question.setText(questionDto.getText());
@@ -33,6 +30,7 @@ public class QuestionMapper {
     public QuestionDto toDto(Question question) {
         QuestionDto questionDto = new QuestionDto();
 
+        questionDto.setId(question.getId());
         questionDto.setCategoryId(question.getCategory().getId());
         questionDto.setUserId(question.getId());
         questionDto.setText(question.getText());

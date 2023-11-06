@@ -8,7 +8,6 @@ import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

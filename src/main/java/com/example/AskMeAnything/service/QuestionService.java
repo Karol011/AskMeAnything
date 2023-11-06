@@ -97,8 +97,6 @@ public class QuestionService {
             return getQuestionMapper().toDto(question);
         } else if (question == null) {
             throw new QuestionNotFoundException("Question not found");
-        } else if (categoryDto == null) {
-            throw new CategoryNotFoundException("Category not found");
         }
         return new QuestionDto();
     }

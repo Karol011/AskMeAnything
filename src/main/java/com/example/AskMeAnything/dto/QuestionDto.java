@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Data
 public class QuestionDto {
 
+
+    private long id;
     @NotNull(message = "This field must not be empty.")
     private Long categoryId;
 
