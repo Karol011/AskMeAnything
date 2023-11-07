@@ -56,6 +56,16 @@ public class CategoryService {
         return categoryMapper.toDto(category);
     }
 
+    public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
+        Category category = findDById(id);
+
+        category.setName(categoryDto.getName());
+        category.setQuestions(categoryDto.getQuestions());
+
+        this.getCategoryRepository().save(category);
+        return getCategoryMapper().toDto(category);
+    }
+
     public HttpStatus deleteCategory(Long id) {
         Optional<Category> searchedCategory = getCategoryRepository().findById(id);
         HttpStatus httpStatus;
@@ -81,6 +91,7 @@ public class CategoryService {
         }
         return httpStatus;
     }
+
 
 }
 

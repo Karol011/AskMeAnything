@@ -1,6 +1,7 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.dto.CategoryDto;
+import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    //GET
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> findCategoryById(@PathVariable Long id) {
         return new ResponseEntity<>(getCategoryService().findDtoById(id), HttpStatus.OK);
@@ -31,17 +33,24 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
-
         return new ResponseEntity<>(getCategoryService().findAll(), HttpStatus.OK);
     }
 
-
+    //POST
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
-
         return new ResponseEntity<>(getCategoryService().createCategory(categoryDto), HttpStatus.CREATED);
     }
 
+    //PUT
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
+        return new ResponseEntity<>(getCategoryService().updateCategory(id, categoryDto), HttpStatus.OK);
+    }
+
+//PATCH
+
+    //DELETE
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable Long id) {
         return new ResponseEntity<>(getCategoryService().deleteCategory(id));

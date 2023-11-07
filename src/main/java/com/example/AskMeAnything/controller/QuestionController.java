@@ -40,10 +40,7 @@ public class QuestionController {
 
 
     @PostMapping
-
     public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
-
-
         return new ResponseEntity<>(getQuestionService().createQuestion(questionDto), HttpStatus.CREATED);
     }
 
