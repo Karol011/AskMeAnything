@@ -23,6 +23,7 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
+//GET
     @GetMapping("/{id}")
     public ResponseEntity<QuestionDto> findQuestionById(@PathVariable Long id) {
         return new ResponseEntity<>(getQuestionService().findDtoById(id), HttpStatus.OK);
@@ -38,17 +39,23 @@ public class QuestionController {
         return new ResponseEntity<>(getQuestionService().getQuestionsByCategory(id), HttpStatus.OK);
     }
 
-
+//POST
     @PostMapping
     public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
         return new ResponseEntity<>(getQuestionService().createQuestion(questionDto), HttpStatus.CREATED);
     }
-
+//PUT
     @PatchMapping("{questionId}/category/{categoryId}")
     public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
         return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId), HttpStatus.OK);
     }
 
+//PATCH
+
+
+
+
+//DELETE
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteQuestion(@PathVariable Long id) {
         return new ResponseEntity<>(getQuestionService().deleteQuestion(id), HttpStatus.OK);

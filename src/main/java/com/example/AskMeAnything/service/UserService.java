@@ -2,6 +2,7 @@ package com.example.AskMeAnything.service;
 
 import com.example.AskMeAnything.dto.UserDto;
 import com.example.AskMeAnything.dto.UserMapper;
+import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.UserNotFoundException;
 import com.example.AskMeAnything.repository.UserRepository;
@@ -65,6 +66,19 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
+    public UserDto updateUser(Long id, UserDto userDto) {
+        User user = findById(id);
+
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setQuestions(userDto.getQuestions());
+
+        getUserRepository().save(user);
+        return getUserMapper().toDto(user);
+
+    }
+
     public ResponseEntity<Object> deleteUser(Long id) {
         Optional<User> searchedUser = getUserRepository().findById(id);
 
@@ -76,4 +90,6 @@ public class UserService {
         String notFoundMessage = String.format("User with id %d not found", id);
         return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);
     }
+
+
 }

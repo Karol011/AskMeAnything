@@ -7,6 +7,7 @@ import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,11 @@ import java.util.Optional;
 
 @Service
 @Getter
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-
-    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
-        this.categoryRepository = categoryRepository;
-        this.categoryMapper = categoryMapper;
-    }
 
     public CategoryDto findDtoById(Long id) {
         Category category = getCategoryRepository()
