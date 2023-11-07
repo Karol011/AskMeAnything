@@ -1,7 +1,6 @@
 package com.example.AskMeAnything.controller;
 
 import com.example.AskMeAnything.dto.CategoryDto;
-import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.Getter;

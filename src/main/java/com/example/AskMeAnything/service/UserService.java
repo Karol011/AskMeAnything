@@ -2,8 +2,8 @@ package com.example.AskMeAnything.service;
 
 import com.example.AskMeAnything.dto.UserDto;
 import com.example.AskMeAnything.dto.UserMapper;
-import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.User;
+import com.example.AskMeAnything.exception.InvalidArgumentException;
 import com.example.AskMeAnything.exception.UserNotFoundException;
 import com.example.AskMeAnything.repository.UserRepository;
 import lombok.Getter;
@@ -77,6 +77,37 @@ public class UserService {
         getUserRepository().save(user);
         return getUserMapper().toDto(user);
 
+    }
+
+    public UserDto modifyUser(Long id, UserDto userDto) {
+        User user = findById(id);
+        //Name
+        if (userDto.getName() != null) {
+            if (userDto.getName().length() > 50 || userDto.getName().length() < 2) {
+                throw new InvalidArgumentException("Username must contain between 2 to 50 characters");
+            }
+            user.setName(userDto.getName());
+        }
+        //password
+        if (userDto.getPassword() != null) {
+            user.setPassword(userDto.getPassword());
+        }
+        //email
+        if (userDto.getEmail() != null) {
+            if (!userDto.getEmail().contains("@")) {
+                throw new InvalidArgumentException("Email must be valid");
+            }
+            user.setEmail(userDto.getEmail());
+        }
+        //questions
+        if (userDto.getQuestions() != null) {
+            if (!userDto.getQuestions().isEmpty()) {
+                user.setQuestions(userDto.getQuestions());
+            }
+        }
+
+        getUserRepository().save(user);
+        return getUserMapper().toDto(user);
     }
 
     public ResponseEntity<Object> deleteUser(Long id) {

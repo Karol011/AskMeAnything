@@ -1,6 +1,5 @@
 package com.example.AskMeAnything.controller;
 
-import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.dto.UserDto;
 import com.example.AskMeAnything.service.UserService;
 import jakarta.validation.Valid;
@@ -43,13 +42,18 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
+
     //PUT
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUSer(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
         return new ResponseEntity<>(getUserService().updateUser(id, userDto), HttpStatus.OK);
     }
 
-
+    //PATCH
+    @PatchMapping("{id}")
+    public ResponseEntity<UserDto> modifyUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        return new ResponseEntity<>(getUserService().modifyUser(id, userDto), HttpStatus.OK);
+    }
 
     //DELETE
     @DeleteMapping("{id}")

@@ -22,6 +22,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleQuestionNotFoundException(QuestionNotFoundException exception) {
         return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
+    @ExceptionHandler(InvalidArgumentException.class)
+    public ResponseEntity<Object> invalidArgumentException(InvalidArgumentException exception) {
+        return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_ACCEPTABLE, exception.getMessage()));
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
