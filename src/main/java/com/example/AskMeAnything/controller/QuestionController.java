@@ -45,12 +45,17 @@ public class QuestionController {
         return new ResponseEntity<>(getQuestionService().createQuestion(questionDto), HttpStatus.CREATED);
     }
 //PUT
-    @PatchMapping("{questionId}/category/{categoryId}")
-    public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
-        return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId), HttpStatus.OK);
-    }
+@PutMapping("{questionId}")
+public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto) {
+    return new ResponseEntity<>(questionService.updateQuestion(questionId, questionDto), HttpStatus.OK);
+}
+
 
 //PATCH
+@PatchMapping("{questionId}/category/{categoryId}")
+public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
+    return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId), HttpStatus.OK);
+}
 
 
 

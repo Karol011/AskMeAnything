@@ -49,7 +49,6 @@ public class QuestionService {
     }
 
 
-
     public List<QuestionDto> findAll() {
 
         List<QuestionDto> list = getQuestionRepository().findAll()
@@ -60,11 +59,11 @@ public class QuestionService {
     }
 
     public List<QuestionDto> getQuestionsByCategory(Long id) {
-       return getCategoryService().findDById(id)
-               .getQuestions()
-               .stream()
-               .map(questionMapper::toDto)
-               .toList();
+        return getCategoryService().findDById(id)
+                .getQuestions()
+                .stream()
+                .map(questionMapper::toDto)
+                .toList();
     }
 
     @Transactional
@@ -85,6 +84,13 @@ public class QuestionService {
         getCategoryService().getCategoryRepository().save(getCategoryService().getCategoryMapper().toEntity(categoryDto));
 
         return getQuestionMapper().toDto(question);
+    }
+
+    public QuestionDto updateQuestion(Long questionId, QuestionDto questionDto) {
+        Question question = findById(questionId);
+        question = questionMapper.toEntity(questionDto);
+        getQuestionRepository().save(question);
+        return questionMapper.toDto(question);
     }
 
     public QuestionDto updateQuestionCategory(Long questionId, Long categoryId) {
