@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -21,16 +20,16 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+   // @JoinColumn(name = "category_id")
     @JsonIgnore
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+   // @JoinColumn(name = "user_id")
     @JsonBackReference
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @NotBlank(message = "This field must not be empty.")
@@ -50,4 +49,14 @@ public class Question {
         this.dateTime = LocalDateTime.now();
     }
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", category=" + category.getName() +
+                ", user=" + user.getName() +
+                ", text='" + text + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 }

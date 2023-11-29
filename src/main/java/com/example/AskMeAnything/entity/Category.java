@@ -22,7 +22,7 @@ public class Category {
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Question> questions;
 
     public Category(String name) {

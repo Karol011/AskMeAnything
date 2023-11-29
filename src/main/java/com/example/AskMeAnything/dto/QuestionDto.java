@@ -16,13 +16,13 @@ public class QuestionDto {
     @NotNull(message = "This field must not be empty.")
     private Long categoryId;
 
-    @NotNull(message = "This field must not be empty.")
+    //@NotNull(message = "This field must not be empty.")
     private Long userId;
 
     @NotNull(message = "This field must not be empty.")
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 500, message = "Size must be between 2 and 500 characters")
     private String text;
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime = LocalDateTime.now();
 }
 

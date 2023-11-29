@@ -40,9 +40,9 @@ public class QuestionController {
     }
 
 //POST
-    @PostMapping
-    public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto) {
-        return new ResponseEntity<>(getQuestionService().createQuestion(questionDto), HttpStatus.CREATED);
+    @PostMapping("/users/{userId}")
+    public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto, @PathVariable Long userId) {
+        return new ResponseEntity<>(getQuestionService().createQuestion(questionDto, userId), HttpStatus.CREATED);
     }
 //PUT
 @PutMapping("{questionId}")

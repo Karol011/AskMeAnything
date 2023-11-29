@@ -50,13 +50,13 @@ public class UserController {
     }
 
     //PATCH
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<UserDto> modifyUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         return new ResponseEntity<>(getUserService().modifyUser(id, userDto), HttpStatus.OK);
     }
 
     //DELETE
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }

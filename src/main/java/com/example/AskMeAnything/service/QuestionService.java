@@ -3,12 +3,10 @@ package com.example.AskMeAnything.service;
 import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.dto.QuestionDto;
 import com.example.AskMeAnything.dto.QuestionMapper;
-import com.example.AskMeAnything.dto.UserDto;
+import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.Question;
-import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.exception.QuestionNotFoundException;
 import com.example.AskMeAnything.repository.QuestionRepository;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,22 +64,16 @@ public class QuestionService {
                 .toList();
     }
 
-    @Transactional
-    public QuestionDto createQuestion(QuestionDto questionDto) {
+    public QuestionDto createQuestion(QuestionDto questionDto, Long userId) {
 
-        CategoryDto categoryDto = getCategoryService().findDtoById(questionDto.getCategoryId());
-        UserDto userDto = getUserService().findDtoById(questionDto.getUserId());
+        Category category = getCategoryService().findDById(questionDto.getCategoryId());
 
         Question question = new Question();
-        question.setCategory(getCategoryService().getCategoryMapper().toEntity(categoryDto));
-        question.setUser(getUserService().getUserMapper().toEntity(userDto));
+        question.setCategory(category);
+        question.setUser(getUserService().findById(userId));
         question.setText(questionDto.getText());
 
         getQuestionRepository().save(question);
-        userDto.getQuestions().add(question);
-
-        categoryDto.getQuestions().add(question);
-        getCategoryService().getCategoryRepository().save(getCategoryService().getCategoryMapper().toEntity(categoryDto));
 
         return getQuestionMapper().toDto(question);
     }
