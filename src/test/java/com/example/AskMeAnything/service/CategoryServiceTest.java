@@ -1,5 +1,7 @@
 package com.example.AskMeAnything.service;
 
+import com.example.AskMeAnything.dto.CategoryDto;
+import com.example.AskMeAnything.dto.CategoryMapper;
 import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.Optional;
 
@@ -19,6 +22,8 @@ class CategoryServiceTest {
 
     @Mock
     private CategoryRepository categoryRepository;
+    @Mock
+    private CategoryMapper categoryMapper;
     @InjectMocks
     private CategoryService categoryService;
 
@@ -59,4 +64,33 @@ class CategoryServiceTest {
         // Verify that the repository method was called once with the given ID
         verify(categoryRepository, times(1)).findById(categoryId);
     }
+
+    @Test
+    public void shouldCreateCategory() {
+        Long categoryId = 1L;
+        Category category = new Category();
+        category.setId(categoryId);
+        category.setName("Test Category");
+
+        CategoryDto categoryDto = CategoryDto.builder()
+                .id(1L)
+                .name("Test Category")
+                .build();
+
+        when(categoryMapper.toEntity(categoryDto)).thenReturn(category);
+        when(categoryMapper.toDto(category)).thenReturn(categoryDto);
+        when(categoryRepository.save(category)).thenReturn(category);
+
+        // When
+        CategoryDto createdCategory = categoryService.createCategory(categoryDto);
+
+        // Then
+        assertEquals(categoryDto, createdCategory);
+
+        // Verify that methods were called
+        verify(categoryMapper, times(1)).toEntity(categoryDto);
+        verify(categoryMapper, times(1)).toDto(category);
+        verify(categoryRepository, times(1)).save(category);
+    }
+
 }
