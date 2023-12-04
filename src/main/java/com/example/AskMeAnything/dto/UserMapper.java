@@ -8,7 +8,10 @@ public class UserMapper {
 
     public User toEntity(UserDto userDto) {
         User user = new User();
-        user.setId(userDto.getId());
+
+        if (userDto.getId() != null) {
+            user.setId(userDto.getId());
+        }
         user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());

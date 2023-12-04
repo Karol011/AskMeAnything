@@ -55,12 +55,7 @@ public class UserService {
 
     public UserDto createUser(UserDto newUserDto) {
 
-        User user = new User(
-                newUserDto.getName(),
-                newUserDto.getPassword(),
-                newUserDto.getEmail()
-
-        );
+        User user = getUserMapper().toEntity(newUserDto);
         userRepository.save(user);
 
         return userMapper.toDto(user);
