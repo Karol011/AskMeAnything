@@ -68,12 +68,9 @@ public class QuestionService {
     public QuestionDto createQuestion(QuestionDto questionDto, Long userId) {
 
         Category category = getCategoryService().findDById(questionDto.getCategoryId());
+        User user = getUserService().findById(userId);
 
-        Question question = new Question();
-        question.setCategory(category);
-        question.setUser(getUserService().findById(userId));
-        question.setText(questionDto.getText());
-
+        Question question = questionMapper.toEntity(questionDto, category, user);
         getQuestionRepository().save(question);
 
         return getQuestionMapper().toDto(question);
