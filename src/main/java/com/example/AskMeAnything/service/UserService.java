@@ -63,11 +63,7 @@ public class UserService {
 
     public UserDto updateUser(Long id, UserDto userDto) {
         User user = findById(id);
-
-        user.setName(userDto.getName());
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
-        user.setQuestions(userDto.getQuestions());
+        user = getUserMapper().toEntity(userDto, id);
 
         getUserRepository().save(user);
         return getUserMapper().toDto(user);

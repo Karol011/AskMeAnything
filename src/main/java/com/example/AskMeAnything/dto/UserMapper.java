@@ -19,6 +19,19 @@ public class UserMapper {
 
         return user;
     }
+    public User toEntity(UserDto userDto, Long id) {
+        User user = new User();
+
+        if (id != null) {
+            user.setId(id);
+        }
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+        user.setQuestions(userDto.getQuestions());
+
+        return user;
+    }
 
     public UserDto toDto(User user) {
         UserDto userDto = new UserDto();
