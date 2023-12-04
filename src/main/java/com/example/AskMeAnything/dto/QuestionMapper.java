@@ -1,6 +1,8 @@
 package com.example.AskMeAnything.dto;
 
+import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.Question;
+import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.service.CategoryService;
 import com.example.AskMeAnything.service.UserService;
 import org.springframework.stereotype.Component;
@@ -8,20 +10,42 @@ import org.springframework.stereotype.Component;
 @Component
 public class QuestionMapper {
 
-    private final CategoryService categoryService;
-    private final UserService userService;
-
-    public QuestionMapper(CategoryService categoryService, UserService userService) {
-        this.categoryService = categoryService;
-        this.userService = userService;
-    }
 
     public Question toEntity(QuestionDto questionDto) {
         Question question = new Question();
 
         question.setId(questionDto.getId());
-        question.setCategory(categoryService.findDById(questionDto.getCategoryId()));
-        question.setUser(userService.findById(questionDto.getUserId()));
+        question.setText(questionDto.getText());
+        question.setDateTime(questionDto.getLocalDateTime());
+        return question;
+    }
+
+    public Question toEntity(QuestionDto questionDto, User user) {
+        Question question = new Question();
+
+        question.setId(questionDto.getId());
+        question.setUser(user);
+        question.setText(questionDto.getText());
+        question.setDateTime(questionDto.getLocalDateTime());
+        return question;
+    }
+
+    public Question toEntity(QuestionDto questionDto, Category category) {
+        Question question = new Question();
+
+        question.setId(questionDto.getId());
+        question.setCategory(category);
+        question.setText(questionDto.getText());
+        question.setDateTime(questionDto.getLocalDateTime());
+        return question;
+    }
+
+    public Question toEntity(QuestionDto questionDto, Category category, User user) {
+        Question question = new Question();
+
+        question.setId(questionDto.getId());
+        question.setCategory(category);
+        question.setUser(user);
         question.setText(questionDto.getText());
         question.setDateTime(questionDto.getLocalDateTime());
         return question;

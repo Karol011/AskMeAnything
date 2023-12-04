@@ -5,6 +5,7 @@ import com.example.AskMeAnything.dto.QuestionDto;
 import com.example.AskMeAnything.dto.QuestionMapper;
 import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.Question;
+import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.QuestionNotFoundException;
 import com.example.AskMeAnything.repository.QuestionRepository;
 import lombok.Getter;
@@ -81,22 +82,20 @@ public class QuestionService {
     public QuestionDto updateQuestion(Long questionId, QuestionDto questionDto) {
         Question question = findById(questionId);
         question = questionMapper.toEntity(questionDto);
+
         getQuestionRepository().save(question);
         return questionMapper.toDto(question);
     }
 
-    public QuestionDto updateQuestionCategory(Long questionId, Long categoryId) {
-        Question question = this.findById(questionId);
-        CategoryDto categoryDto = getCategoryService().findDtoById(categoryId);
 
-        if (question != null && categoryDto != null) {
-            question.setCategory(getCategoryService().getCategoryMapper().toEntity(categoryDto));
-            getQuestionRepository().save(question);
-            return getQuestionMapper().toDto(question);
-        } else if (question == null) {
-            throw new QuestionNotFoundException("Question not found");
-        }
-        return new QuestionDto();
+    public QuestionDto updateQuestionCategory(Long questionId, Long categoryId) {
+        Question question = findById(questionId);
+        Category category = getCategoryService().findDById(categoryId);
+
+        question.setCategory(category);
+        getQuestionRepository().save(question);
+
+        return getQuestionMapper().toDto(question);
     }
 
     public Object deleteQuestion(Long id) {

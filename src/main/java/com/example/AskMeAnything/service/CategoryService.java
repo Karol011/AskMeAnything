@@ -4,6 +4,7 @@ package com.example.AskMeAnything.service;
 import com.example.AskMeAnything.dto.CategoryDto;
 import com.example.AskMeAnything.dto.CategoryMapper;
 import com.example.AskMeAnything.entity.Category;
+import com.example.AskMeAnything.entity.Question;
 import com.example.AskMeAnything.exception.CategoryNotFoundException;
 import com.example.AskMeAnything.repository.CategoryRepository;
 import lombok.Getter;
@@ -48,6 +49,7 @@ public class CategoryService {
     public CategoryDto createCategory(CategoryDto categoryDto) {
 
         Category category = categoryMapper.toEntity(categoryDto);
+
         categoryRepository.save(category);
 
         return categoryMapper.toDto(category);
@@ -55,11 +57,8 @@ public class CategoryService {
 
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
         Category category = findDById(id);
-
         category.setName(categoryDto.getName());
-        category.setQuestions(categoryDto.getQuestions());
-
-        this.getCategoryRepository().save(category);
+        getCategoryRepository().save(category);
         return getCategoryMapper().toDto(category);
     }
 

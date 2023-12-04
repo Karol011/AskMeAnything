@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/question")
+@RequestMapping("/questions")
 @Getter
 @Validated
 public class QuestionController {
@@ -23,7 +23,7 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-//GET
+    //GET
     @GetMapping("/{id}")
     public ResponseEntity<QuestionDto> findQuestionById(@PathVariable Long id) {
         return new ResponseEntity<>(getQuestionService().findDtoById(id), HttpStatus.OK);
@@ -39,28 +39,27 @@ public class QuestionController {
         return new ResponseEntity<>(getQuestionService().getQuestionsByCategory(id), HttpStatus.OK);
     }
 
-//POST
+    //POST
     @PostMapping("/users/{userId}")
     public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionDto questionDto, @PathVariable Long userId) {
         return new ResponseEntity<>(getQuestionService().createQuestion(questionDto, userId), HttpStatus.CREATED);
     }
-//PUT
-@PutMapping("{questionId}")
-public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto) {
-    return new ResponseEntity<>(questionService.updateQuestion(questionId, questionDto), HttpStatus.OK);
-}
+
+    //PUT
+    @PutMapping("/{questionId}")
+    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionDto questionDto) {
+        return new ResponseEntity<>(questionService.updateQuestion(questionId, questionDto), HttpStatus.OK);
+    }
 
 
-//PATCH
-@PatchMapping("{questionId}/category/{categoryId}")
-public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
-    return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId), HttpStatus.OK);
-}
+    //PATCH
+    @PatchMapping("{questionId}/category/{categoryId}")
+    public ResponseEntity<QuestionDto> updateQuestionCategory(@PathVariable Long questionId, @PathVariable Long categoryId) {
+        return new ResponseEntity<>(questionService.updateQuestionCategory(questionId, categoryId), HttpStatus.OK);
+    }
 
 
-
-
-//DELETE
+    //DELETE
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteQuestion(@PathVariable Long id) {
         return new ResponseEntity<>(getQuestionService().deleteQuestion(id), HttpStatus.OK);

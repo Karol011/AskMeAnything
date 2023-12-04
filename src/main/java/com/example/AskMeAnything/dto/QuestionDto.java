@@ -13,10 +13,8 @@ public class QuestionDto {
 
 
     private long id;
-    @NotNull(message = "This field must not be empty.")
-    private Long categoryId;
-
     //@NotNull(message = "This field must not be empty.")
+    private Long categoryId;
     private Long userId;
 
     @NotNull(message = "This field must not be empty.")

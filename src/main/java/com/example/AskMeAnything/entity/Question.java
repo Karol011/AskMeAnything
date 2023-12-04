@@ -49,14 +49,4 @@ public class Question {
         this.dateTime = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", category=" + category.getName() +
-                ", user=" + user.getName() +
-                ", text='" + text + '\'' +
-                ", dateTime=" + dateTime +
-                '}';
-    }
 }

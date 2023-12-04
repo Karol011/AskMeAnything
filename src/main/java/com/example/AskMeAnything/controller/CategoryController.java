@@ -42,9 +42,9 @@ public class CategoryController {
     }
 
     //PUT
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
-        return new ResponseEntity<>(getCategoryService().updateCategory(id, categoryDto), HttpStatus.OK);
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long categoryId, @Valid @RequestBody CategoryDto categoryDto) {
+        return new ResponseEntity<>(getCategoryService().updateCategory(categoryId, categoryDto), HttpStatus.OK);
     }
 
     //DELETE
