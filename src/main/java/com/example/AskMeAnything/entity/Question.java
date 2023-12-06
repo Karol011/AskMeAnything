@@ -26,7 +26,7 @@ public class Question {
     //@OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
    // @JoinColumn(name = "user_id")
     @JsonBackReference
     //@OnDelete(action = OnDeleteAction.CASCADE)
