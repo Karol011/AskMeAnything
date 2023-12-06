@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -20,16 +18,12 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-   // @JoinColumn(name = "category_id")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
     @JsonIgnore
-    //@OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
-   // @JoinColumn(name = "user_id")
     @JsonBackReference
-    //@OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @NotBlank(message = "This field must not be empty.")
