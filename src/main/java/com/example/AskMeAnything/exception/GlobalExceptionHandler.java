@@ -14,6 +14,11 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));
     }
 
+    @ExceptionHandler(UserWithThatEmailAlreadyExists.class)
+    public ResponseEntity<Object> handleUserWithExistingEmailException(UserWithThatEmailAlreadyExists exception) {
+        return buildResponseEntity(new ExceptionResponse(HttpStatus.CONFLICT, exception.getMessage()));
+    }
+
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException exception) {
         return buildResponseEntity(new ExceptionResponse(HttpStatus.NOT_FOUND, exception.getMessage()));

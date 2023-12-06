@@ -5,6 +5,7 @@ import com.example.AskMeAnything.dto.UserMapper;
 import com.example.AskMeAnything.entity.User;
 import com.example.AskMeAnything.exception.InvalidArgumentException;
 import com.example.AskMeAnything.exception.UserNotFoundException;
+import com.example.AskMeAnything.exception.UserWithThatEmailAlreadyExists;
 import com.example.AskMeAnything.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public class UserService {
     }
 
     public UserDto createUser(UserDto newUserDto) {
-
+        checkIfUserWithThisSpecificEmailExists(newUserDto.getEmail());
         User user = getUserMapper().toEntity(newUserDto);
         userRepository.save(user);
 
@@ -62,6 +63,7 @@ public class UserService {
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {
+        checkIfUserWithThisSpecificEmailExists(userDto.getEmail());
         User user = findById(id);
         user = getUserMapper().toEntity(userDto, id);
 
@@ -71,6 +73,7 @@ public class UserService {
     }
 
     public UserDto modifyUser(Long id, UserDto userDto) {
+        checkIfUserWithThisSpecificEmailExists(userDto.getEmail());
         User user = findById(id);
         //Name
         if (userDto.getName() != null) {
@@ -113,5 +116,15 @@ public class UserService {
         return new ResponseEntity<>(notFoundMessage, HttpStatus.NOT_FOUND);
     }
 
+    private void checkIfUserWithThisSpecificEmailExists(String email) {
+        boolean userWithThatEmailAlreadyExists = false;
+        userWithThatEmailAlreadyExists = findAll().stream()
+                .map(UserDto::getEmail)
+                .anyMatch(mail -> mail.equals(email));
 
+        if (userWithThatEmailAlreadyExists) {
+            throw new UserWithThatEmailAlreadyExists("User with email: " +email + " already exists");
+        }
+
+    }
 }
