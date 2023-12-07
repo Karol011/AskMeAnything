@@ -3,8 +3,6 @@ package com.example.AskMeAnything.dto;
 import com.example.AskMeAnything.entity.Category;
 import com.example.AskMeAnything.entity.Question;
 import com.example.AskMeAnything.entity.User;
-import com.example.AskMeAnything.service.CategoryService;
-import com.example.AskMeAnything.service.UserService;
 import org.springframework.stereotype.Component;
 
 @Component
