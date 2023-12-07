@@ -78,7 +78,12 @@ public class QuestionService {
 
     public QuestionDto updateQuestion(Long questionId, QuestionDto questionDto) {
         Question question = findById(questionId);
-        question = questionMapper.toEntity(questionDto);
+        questionDto.setId(questionId);
+
+        User user = getUserService().findById(questionDto.getUserId());
+        Category category = getCategoryService().findDById(questionDto.getCategoryId());
+
+        question = questionMapper.toEntity(questionDto, category, user);
 
         getQuestionRepository().save(question);
         return questionMapper.toDto(question);
