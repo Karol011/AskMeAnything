@@ -1,10 +1,24 @@
 <h1>Backend (for now! :)) for stackoverflow clone. Where users can asks questions about various topics.</h1>
 
-![image](https://github.com/Karol011/AskMeAnything/assets/57830019/de1d7fa1-d88d-4d38-887c-497b450e0ea8)
-![image](https://github.com/Karol011/AskMeAnything/assets/57830019/e58665c9-b5df-4500-904d-cd5cea36da09)
-![image](https://github.com/Karol011/AskMeAnything/assets/57830019/7d239012-35d3-4836-ab37-58ec2c5c6479)
+<h2>Technologies used:</h2>
+<div align="center">
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117201156-9a724800-adec-11eb-9a9d-3cd0f67da4bc.png" alt="Java" title="Java"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183891303-41f257f8-6b3d-487c-aa56-c497b880d0fb.png" alt="Spring Boot" title="Spring Boot"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117201470-f6d56780-adec-11eb-8f7c-e70e376cfd07.png" alt="Spring" title="Spring"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117207493-49665200-adf4-11eb-808e-a9c0fcc2a0a0.png" alt="Hibernate" title="Hibernate"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117533873-484d4480-afef-11eb-9fad-67c8605e3592.png" alt="JUnit" title="JUnit"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png" alt="MySQL" title="MySQL"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/117207242-07d5a700-adf4-11eb-975e-be04e62b984b.png" alt="Maven" title="Maven"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7128.png" alt="Postman" title="Postman"/></code>
+</div>
 
-Project roadmap:
+
+<h2>Endpoints</h2>
+<img src="https://github.com/Karol011/AskMeAnything/assets/57830019/de1d7fa1-d88d-4d38-887c-497b450e0ea8" alt="Image 1">
+<img src="https://github.com/Karol011/AskMeAnything/assets/57830019/e58665c9-b5df-4500-904d-cd5cea36da09" alt="Image 2">
+<img src="https://github.com/Karol011/AskMeAnything/assets/57830019/7d239012-35d3-4836-ab37-58ec2c5c6479" alt="Image 3">
+
+<h2>Project Roadmap</h2>
 
 **Phase 1: Setup and User Registration**
 
