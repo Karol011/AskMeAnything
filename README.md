@@ -65,7 +65,7 @@
   ⌛Show a list of top-rated users.  
   ⌛Allow users to set avatars.  
   ⌛Add user roles (e.g., Administrator and User).  
-  ⌛Define admin privileges, such as question and answer deletion, category management, etc.  
+  ⌛Define admin privileges, such as question and answer deletion, category management, etc. 
 
 **Phase 5: Additional Enhancements**
 
