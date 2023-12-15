@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,6 +28,9 @@ public class Question {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
     @JsonBackReference
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Answer> answers;
 
     @NotBlank(message = "This field must not be empty.")
     @Size(min = 2, max = 500)
